@@ -19,6 +19,7 @@ ExecStart=/usr/bin/podman run --conmon-pidfile %t/mariadb-app.pid \
     --cidfile %t/mariadb-app.ctr-id --cgroups=no-conmon \
     --pod-id-file %t/dolibarr.pod-id --replace -d --name mariadb-app \
     --env-file=%S/state/environment \
+    --network=container:dolibarr-app \
     --volume mysql-data:/var/lib/mysql/:Z \
     --env MARIADB_ROOT_PASSWORD=Dolibarr,1234 \
     --env MARIADB_DATABASE=dolibarr \
