@@ -23,7 +23,7 @@ ExecStart=/usr/bin/podman run --conmon-pidfile %t/mariadb-app.pid \
     --env MARIADB_ROOT_PASSWORD=Dolibarr,1234 \
     --env MARIADB_DATABASE=dolibarr \
     --env MARIADB_USER=dolibarr \
-    --env MARIADB_PASSWORD=D0l1IB@Rr \
+    --env MARIADB_PASSWORD=Dolibarr,1234 \
     --env MARIADB_AUTO_UPGRADE=1 \
     ${MARIADB_IMAGE} \
     --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
