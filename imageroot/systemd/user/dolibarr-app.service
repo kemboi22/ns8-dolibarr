@@ -21,8 +21,9 @@ ExecStartPre=-runagent discover-smarthost
 ExecStart=/usr/bin/podman run --conmon-pidfile %t/dolibarr-app.pid \
     --cidfile %t/dolibarr-app.ctr-id --cgroups=no-conmon \
     --pod-id-file %t/dolibarr.pod-id --replace -d --name  dolibarr-app \
+    --network=container:mariadb-app \
     --env DOLI_DB_TYPE=mysqli \
-    --env DOLI_DB_HOST=mariadb-app \
+    --env DOLI_DB_HOST=localhost \
     --env DOLI_DB_USER=dolibarr \
     --env DOLI_DB_PASSWORD=Dolibarr,1234 \
     --env DOLI_DB_NAME=dolibarr \
