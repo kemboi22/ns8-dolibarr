@@ -1,3 +1,8 @@
+#
+# Copyright (C) 2022 Nethesis S.r.l.
+# SPDX-License-Identifier: GPL-3.0-or-later
+#
+
 [Unit]
 Description=Podman  dolibarr-app.service
 BindsTo=dolibarr.service
@@ -15,12 +20,12 @@ ExecStartPre=/bin/rm -f %t/dolibarr-app.pid %t/dolibarr-app.ctr-id
 ExecStartPre=-runagent discover-smarthost
 ExecStart=/usr/bin/podman run --conmon-pidfile %t/dolibarr-app.pid \
     --cidfile %t/dolibarr-app.ctr-id --cgroups=no-conmon \
-    --pod dolibarr-pod \
-    --name dolibarr-app \
+    --pod-id-file %t/dolibarr.pod-id --replace -d --name  dolibarr-app \
     --env DOLI_DB_TYPE=mysqli \
-    --env DOLI_DB_HOST=mariadb-app \
+    --env DOLI_DB_HOST=mariadb-app\
     --env DOLI_DB_USER=dolibarr \
     --env DOLI_DB_PASSWORD=Dolibarr,1234 \
+    --env DOLI_DB_HOST_PORT=3306 \
     --env DOLI_DB_NAME=dolibarr \
     --env DOLI_ADMIN_LOGIN=admin \
     --env DOLI_ADMIN_PASSWORD=admin \
@@ -33,4 +38,9 @@ ExecStart=/usr/bin/podman run --conmon-pidfile %t/dolibarr-app.pid \
 ExecStop=/usr/bin/podman stop --ignore --cidfile %t/dolibarr-app.ctr-id -t 10
 ExecReload=/usr/bin/podman kill -s HUP dolibarr-app
 SyslogIdentifier=%u
-ExecStopPost=/usr/bin/podman rm --ignore -
+ExecStopPost=/usr/bin/podman rm --ignore -f --cidfile %t/dolibarr-app.ctr-id
+PIDFile=%t/dolibarr-app.pid
+Type=forking
+
+[Install]
+WantedBy=default.target
