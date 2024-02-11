@@ -34,7 +34,7 @@
             >
             </cv-text-input>
             <cv-text-input
-              :label="$t('settings.dolibarr admin')"
+              :label="$t('settings.dolibarr_admin')"
               placeholder="Dolibar Admin Username"
               v-model.trim="DOLI_ADMIN_LOGIN"
               class="mg-bottom"
@@ -44,7 +44,7 @@
             >
             </cv-text-input>
             <cv-text-input
-              :label="$t('settings.dolibarr admin password')"
+              :label="$t('settings.dolibarr_admin_password')"
               placeholder="password"
               v-model.trim="DOLI_ADMIN_PASSWORD"
               class="mg-bottom"
