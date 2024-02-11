@@ -30,9 +30,9 @@ ExecStart=/usr/bin/podman run --conmon-pidfile %t/dolibarr-app.pid \
     --env DOLI_ADMIN_PASSWORD=admin \
     --env DOLI_URL_ROOT=${DOLI_URL_ROOT} \
     --env PHP_INI_DATE_TIMEZONE=Africa/Nairobi \
-    --volumes=dolidoc:/var/www/documents \
-    --volumes=doliscripts:/var/www/scripts \
-    --volumes=dolicustom:/var/www/custom \
+    --volume=dolidoc:/var/www/documents \
+    --volume=doliscripts:/var/www/scripts \
+    --volume=dolicustom:/var/www/custom \
     ${DOLIBARR_IMAGE}
 ExecStop=/usr/bin/podman stop --ignore --cidfile %t/dolibarr-app.ctr-id -t 10
 ExecReload=/usr/bin/podman kill -s HUP dolibarr-app
