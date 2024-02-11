@@ -21,7 +21,8 @@ ExecStartPre=-runagent discover-smarthost
 ExecStart=/usr/bin/podman run --conmon-pidfile %t/dolibarr-app.pid \
     --cidfile %t/dolibarr-app.ctr-id --cgroups=no-conmon \
     --pod-id-file %t/dolibarr.pod-id --replace -d --name  dolibarr-app \
-    --env DOLI_DB_HOST=mariadb \
+    --env DOLI_DB_TYPE=mysqli \
+    --env DOLI_DB_HOST=db \
     --env DOLI_DB_USER=dolibarr \
     --env DOLI_DB_PASSWORD=dolibarr \
     --env DOLI_DB_NAME=dolibarr \
@@ -29,6 +30,9 @@ ExecStart=/usr/bin/podman run --conmon-pidfile %t/dolibarr-app.pid \
     --env DOLI_ADMIN_PASSWORD=admin \
     --env DOLI_URL_ROOT=${DOLI_URL_ROOT} \
     --env PHP_INI_DATE_TIMEZONE=Africa/Nairobi \
+    --volumes=dolidoc:/var/www/documents \
+    --volumes=doliscripts:/var/www/scripts \
+    --volumes=dolicustom:/var/www/custom \
     ${DOLIBARR_IMAGE}
 ExecStop=/usr/bin/podman stop --ignore --cidfile %t/dolibarr-app.ctr-id -t 10
 ExecReload=/usr/bin/podman kill -s HUP dolibarr-app
