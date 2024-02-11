@@ -21,14 +21,12 @@ ExecStartPre=-runagent discover-smarthost
 ExecStart=/usr/bin/podman run --conmon-pidfile %t/dolibarr-app.pid \
     --cidfile %t/dolibarr-app.ctr-id --cgroups=no-conmon \
     --pod-id-file %t/dolibarr.pod-id --replace -d --name  dolibarr-app \
-    --env=MARIADB_* \
     --env DOLI_DB_HOST=mariadb \
     --env DOLI_DB_USER=dolibarr \
     --env DOLI_DB_PASSWORD=dolibarr \
     --env DOLI_DB_NAME=dolibarr \
     --env DOLI_ADMIN_LOGIN=admin \
     --env DOLI_ADMIN_PASSWORD=admin \
-    --env DOLI_URL_ROOT=${TRAEFIK_HOST} \
     --env PHP_INI_DATE_TIMEZONE=Africa/Nairobi \
     ${DOLIBARR_IMAGE}
 ExecStop=/usr/bin/podman stop --ignore --cidfile %t/dolibarr-app.ctr-id -t 10
