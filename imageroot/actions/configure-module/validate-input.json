@@ -31,6 +31,12 @@
             "type": "boolean",
             "title": "HTTP to HTTPS redirection",
             "description": "Redirect all the HTTP requests to HTTPS"
+        },
+        "DOLI_ADMIN_PASSWORD": {
+            "type": "string"
+        },
+        "DOLI_ADMIN_LOGIN": {
+            "type": "string"
         }
     }
 }

@@ -33,6 +33,27 @@
               ref="host"
             >
             </cv-text-input>
+            <cv-text-input
+              :label="$t('settings.dolibarr admin')"
+              placeholder="Dolibar Admin Username"
+              v-model.trim="DOLI_ADMIN_LOGIN"
+              class="mg-bottom"
+              :invalid-message="$t(error.DOLI_ADMIN_LOGIN)"
+              :disabled="loading.getConfiguration || loading.configureModule"
+              ref="DOLI_ADMIN_LOGIN"
+            >
+            </cv-text-input>
+            <cv-text-input
+              :label="$t('settings.dolibarr admin password')"
+              placeholder="password"
+              v-model.trim="DOLI_ADMIN_PASSWORD"
+              class="mg-bottom"
+              :invalid-message="$t(error.DOLI_ADMIN_PASSWORD)"
+              :disabled="loading.getConfiguration || loading.configureModule"
+              type="password"
+              ref="DOLI_ADMIN_PASSWORD"
+            >
+            </cv-text-input>
             <cv-toggle
               value="letsEncrypt"
               :label="$t('settings.lets_encrypt')"
@@ -125,6 +146,8 @@ export default {
       host: "",
       isLetsEncryptEnabled: false,
       isHttpToHttpsEnabled: true,
+      DOLI_ADMIN_LOGIN: "",
+      DOLI_ADMIN_PASSWORD: "",
       loading: {
         getConfiguration: false,
         configureModule: false,
@@ -135,6 +158,8 @@ export default {
         host: "",
         lets_encrypt: "",
         http2https: "",
+        DOLI_ADMIN_LOGIN: "",
+        DOLI_ADMIN_PASSWORD: "",
       },
     };
   },
@@ -200,6 +225,8 @@ export default {
     getConfigurationCompleted(taskContext, taskResult) {
       const config = taskResult.output;
       this.host = config.host;
+      this.DOLI_ADMIN_LOGIN = config.DOLI_ADMIN_LOGIN
+      this.DOLI_ADMIN_PASSWORD = config.DOLI_ADMIN_PASSWORD
       this.isLetsEncryptEnabled = config.lets_encrypt;
       this.isHttpToHttpsEnabled = config.http2https;
 
@@ -269,6 +296,8 @@ export default {
           action: taskAction,
           data: {
             host: this.host,
+            DOLI_ADMIN_PASSWORD: this.DOLI_ADMIN_PASSWORD,
+            DOLI_ADMIN_LOGIN: this.DOLI_ADMIN_LOGIN,
             lets_encrypt: this.isLetsEncryptEnabled,
             http2https: this.isHttpToHttpsEnabled,
           },
