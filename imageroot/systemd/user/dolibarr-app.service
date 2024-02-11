@@ -1,0 +1,42 @@
+#
+# Copyright (C) 2022 Nethesis S.r.l.
+# SPDX-License-Identifier: GPL-3.0-or-later
+#
+
+[Unit]
+Description=Podman  dolibarr-app.service
+BindsTo=dolibarr.service
+After=dolibarr.service mariadb-app.service
+
+[Service]
+Environment=PODMAN_SYSTEMD_UNIT=%n
+EnvironmentFile=%S/state/environment
+EnvironmentFile=-%S/state/smarthost.env
+WorkingDirectory=%S/state
+Restart=always
+TimeoutStopSec=70
+ExecStartPre=/bin/mkdir -p config
+ExecStartPre=/bin/rm -f %t/dolibarr-app.pid %t/dolibarr-app.ctr-id
+ExecStartPre=-runagent discover-smarthost
+ExecStart=/usr/bin/podman run --conmon-pidfile %t/dolibarr-app.pid \
+    --cidfile %t/dolibarr-app.ctr-id --cgroups=no-conmon \
+    --pod-id-file %t/dolibarr.pod-id --replace -d --name  dolibarr-app \
+    --env=MARIADB_* \
+    --env DOLI_DB_HOST=mariadb \
+    --env DOLI_DB_USER=dolibarr \
+    --env DOLI_DB_PASSWORD=dolibarr \
+    --env DOLI_DB_NAME=dolibarr \
+    --env DOLI_ADMIN_LOGIN=admin \
+    --env DOLI_ADMIN_PASSWORD=admin \
+    --env DOLI_URL_ROOT=${TRAEFIK_HOST} \
+    --env PHP_INI_DATE_TIMEZONE=Africa/Nairobi \
+    ${DOLIBARR_IMAGE}
+ExecStop=/usr/bin/podman stop --ignore --cidfile %t/dolibarr-app.ctr-id -t 10
+ExecReload=/usr/bin/podman kill -s HUP dolibarr-app
+SyslogIdentifier=%u
+ExecStopPost=/usr/bin/podman rm --ignore -f --cidfile %t/dolibarr-app.ctr-id
+PIDFile=%t/dolibarr-app.pid
+Type=forking
+
+[Install]
+WantedBy=default.target
