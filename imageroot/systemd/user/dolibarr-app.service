@@ -27,6 +27,7 @@ ExecStart=/usr/bin/podman run --conmon-pidfile %t/dolibarr-app.pid \
     --env DOLI_DB_NAME=dolibarr \
     --env DOLI_ADMIN_LOGIN=admin \
     --env DOLI_ADMIN_PASSWORD=admin \
+    --env DOLI_URL_ROOT=${DOLI_URL_ROOT} \
     --env PHP_INI_DATE_TIMEZONE=Africa/Nairobi \
     ${DOLIBARR_IMAGE}
 ExecStop=/usr/bin/podman stop --ignore --cidfile %t/dolibarr-app.ctr-id -t 10
