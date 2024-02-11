@@ -32,7 +32,9 @@ To start a new module from it:
 
 Instantiate the module with:
 
-    add-module ghcr.io/nethserver/dolibarr:latest 1
+```
+add-module ghcr.io/kemboi22/dolibarr:latest 1
+```
 
 The output of the command will return the instance name.
 Output example:
