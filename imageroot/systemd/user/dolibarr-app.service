@@ -23,7 +23,7 @@ ExecStart=/usr/bin/podman run --conmon-pidfile %t/dolibarr-app.pid \
     --pod-id-file %t/dolibarr.pod-id --replace -d --name  dolibarr-app \
     --env DOLI_DB_TYPE=mysqli \
     --env DOLI_DB_HOST=mariadb-app\
-    --env DOLI_DB_USER=dolibarr \
+    --env DOLI_DB_USER=root \
     --env DOLI_DB_PASSWORD=Dolibarr,1234 \
     --env DOLI_DB_HOST_PORT=3306 \
     --env DOLI_DB_NAME=dolibarr \
