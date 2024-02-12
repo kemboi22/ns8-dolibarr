@@ -36,7 +36,7 @@
             <cv-text-input
               :label="$t('settings.dolibarr_admin')"
               placeholder="Dolibar Admin Username"
-              v-model.trim="DOLI_ADMIN_LOGIN"
+              v-model="DOLI_ADMIN_LOGIN"
               class="mg-bottom"
               :invalid-message="$t(error.DOLI_ADMIN_LOGIN)"
               :disabled="loading.getConfiguration || loading.configureModule"
@@ -46,7 +46,7 @@
             <cv-text-input
               :label="$t('settings.dolibarr_admin_password')"
               placeholder="password"
-              v-model.trim="DOLI_ADMIN_PASSWORD"
+              v-model="DOLI_ADMIN_PASSWORD"
               class="mg-bottom"
               :invalid-message="$t(error.DOLI_ADMIN_PASSWORD)"
               :disabled="loading.getConfiguration || loading.configureModule"

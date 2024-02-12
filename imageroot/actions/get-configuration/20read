@@ -21,6 +21,8 @@ config = {}
 config["host"] = os.getenv("TRAEFIK_HOST","")
 config["http2https"] = os.getenv("TRAEFIK_HTTP2HTTPS") == "True"
 config["lets_encrypt"] = os.getenv("TRAEFIK_LETS_ENCRYPT") == "True"
+config["DOLI_ADMIN_LOGIN"] = os.getenv("DOLI_ADMIN_LOGIN", "")
+config["DOLI_ADMIN_PASSWORD"] = os.getenv("DOLI_ADMIN_PASSWORD", "")
 
 # Dump the configuration to stdout
 json.dump(config, fp=sys.stdout)
