@@ -33,13 +33,13 @@ To start a new module from it:
 Instantiate the module with:
 
 ```
-add-module ghcr.io/kemboi22/dolibarr:latest 1
+add-module ghcr.io/geniusdynamics/dolibarr:latest 1
 ```
 
 The output of the command will return the instance name.
 Output example:
 
-    {"module_id": "dolibarr1", "image_name": "dolibarr", "image_url": "ghcr.io/kemboi22/dolibarr:latest"}
+    {"module_id": "dolibarr1", "image_name": "dolibarr", "image_url": "ghcr.io/geniusdynamics/dolibarr:latest"}
 
 ## Configure
 
@@ -77,7 +77,7 @@ api-cli run get-configuration --agent module/dolibarr1
 Update The Module Forcefully
 
 ```
-api-cli run update-module --data '{"module_url":"ghcr.io/kemboi22/dolibarr:latest","instances":["dolibarr1"],"force":true}'
+api-cli run update-module --data '{"module_url":"ghcr.io/geniusdynamics/dolibarr:latest","instances":["dolibarr1"],"force":true}'
 ```
 
 ## Uninstall
@@ -164,7 +164,7 @@ podman exec -ti   dolibarr-app sh
 Test the module using the `test-module.sh` script:
 
 
-    ./test-module.sh <NODE_ADDR> ghcr.io/nethserver/dolibarr:latest
+    ./test-module.sh <NODE_ADDR> ghcr.io/geniusdynamics/dolibarr:latest
 
 The tests are made using [Robot Framework](https://robotframework.org/)
 
