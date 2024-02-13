@@ -2,7 +2,7 @@
 Library    SSHLibrary
 
 *** Test Cases ***
-Check if kickstart is installed correctly
+Check if ns8-dolibarr is installed correctly
     ${output}  ${rc} =    Execute Command    add-module ${IMAGE_URL} 1
     ...    return_rc=True
     Should Be Equal As Integers    ${rc}  0
