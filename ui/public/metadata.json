@@ -1,19 +1,22 @@
 {
-  "name": "dolibarr",
+  "name": "Dolibarr",
   "description": {
-    "en": "My kickstart module"
+    "en": "One web suite to manage all of your business..."
   },
   "categories": [],
   "authors": [
     {
+      "name": "Martin Bhuong",
+      "email": "martin@genius.ke"
+    },    {
       "name": "Kemboi Elvis",
       "email": "kemboielvis@genius.ke"
     }
   ],
   "docs": {
-    "documentation_url": "https://docs.kickstart.com/",
-    "bug_url": "https://github.com/kemboi22/ns8-dolibarr",
-    "code_url": "https://github.com/kemboi22/ns8-dolibarr"
+    "documentation_url": "https://www.dolibarr.org/documentation-home.php",
+    "bug_url": "https://github.com/geniusdynamics/ns8-dolibarr",
+    "code_url": "https://github.com/geniusdynamics/ns8-dolibarr"
   },
-  "source": "ghcr.io/kemboi22/dolibarr"
+  "source": "ghcr.io/geniusdynamics/dolibarr"
 }
