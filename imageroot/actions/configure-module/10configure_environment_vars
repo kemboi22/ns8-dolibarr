@@ -19,5 +19,6 @@ DOLI_ADMIN_PASSWORD = data.get("DOLI_ADMIN_PASSWORD", "admin")
 
 agent.set_env("DOLI_ADMIN_LOGIN", DOLI_ADMIN_LOGIN)
 agent.set_env("DOLI_ADMIN_PASSWORD", DOLI_ADMIN_PASSWORD)
-
+agent.set_env("ADMIN_USERS", data.get("admin_users","administrator").lower())
+agent.set_env("LDAP_DOMAIN", data["ldap_domain"])
 agent.dump_env()
