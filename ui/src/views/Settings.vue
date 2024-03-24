@@ -54,6 +54,49 @@
               ref="DOLI_ADMIN_PASSWORD"
             >
             </cv-text-input>
+            <NsComboBox
+                v-model.trim="ldap_domain"
+                :autoFilter="true"
+                :autoHighlight="true"
+                :title="$t('settings.ldap_domain')"
+                :label="$t('settings.choose_ldap_domain')"
+                :options="user_domains_list"
+                :userInputLabel="core.$t('settings.choose_ldap_domain')"
+                :acceptUserInput="false"
+                :showItemType="true"
+                :invalid-message="$t(error.ldap_domain)"
+                :disabled="loading.getConfiguration || loading.configureModule"
+                tooltipAlignment="start"
+                tooltipDirection="top"
+                ref="ldap_domain"
+            >
+              <template slot="tooltip">
+                {{
+                  $t("settings.choose_the_ldap_domain_to_authenticate_users")
+                }}
+              </template>
+            </NsComboBox>
+            <cv-accordion ref="accordion" class="maxwidth mg-bottom">
+              <cv-accordion-item :open="toggleAccordion[0]">
+                <template slot="title">{{ $t("settings.advanced") }}</template>
+                <template slot="content">
+                  <cv-text-area
+                      :label="$t('settings.adminList')"
+                      v-model.trim="admin_users"
+                      :invalid-message="error.admin_users"
+                      :helper-text="$t('settings.Write_administrator_list')"
+                      :value="admin_users"
+                      class="maxwidth textarea mg-left"
+                      ref="admin_users"
+                      :placeholder="$t('settings.Write_administrator_list')"
+                      :disabled="
+                      loading.getConfiguration || loading.configureModule
+                    "
+                  >
+                  </cv-text-area>
+                </template>
+              </cv-accordion-item>
+            </cv-accordion>
             <cv-toggle
               value="letsEncrypt"
               :label="$t('settings.lets_encrypt')"
@@ -148,6 +191,9 @@ export default {
       isHttpToHttpsEnabled: true,
       DOLI_ADMIN_LOGIN: "",
       DOLI_ADMIN_PASSWORD: "",
+      ldap_domain: "",
+      admin_users: "",
+      user_domains_list: [],
       loading: {
         getConfiguration: false,
         configureModule: false,
@@ -160,6 +206,8 @@ export default {
         http2https: "",
         DOLI_ADMIN_LOGIN: "",
         DOLI_ADMIN_PASSWORD: "",
+        ldap_domain: "",
+        admin_users: "",
       },
     };
   },
@@ -229,9 +277,19 @@ export default {
       this.DOLI_ADMIN_PASSWORD = config.DOLI_ADMIN_PASSWORD
       this.isLetsEncryptEnabled = config.lets_encrypt;
       this.isHttpToHttpsEnabled = config.http2https;
-
+      this.admin_users = config.admin_users.split(",").join("\n");
+      // force to reload mail_server value after dom update
+      this.$nextTick(() => {
+        this.ldap_domain = config.ldap_domain;
+      });
+      this.user_domains_list = config.user_domains_list;
       this.loading.getConfiguration = false;
       this.focusElement("host");
+    },
+    isValidUser(user) {
+      // test if user is valid login
+      const re = /^[a-zA-Z0-9._-]+$/;
+      return re.test(user);
     },
     validateConfigureModule() {
       this.clearErrors(this);
@@ -244,6 +302,32 @@ export default {
           this.focusElement("host");
         }
         isValidationOk = false;
+      }
+      if (!this.ldap_domain) {
+        this.error.ldap_domain = "common.required";
+
+        if (isValidationOk) {
+          this.focusElement("ldap_domain");
+        }
+        isValidationOk = false;
+      }
+      if (this.admin_users) {
+        // test if the admin_users is valid
+        const admin_users = this.admin_users.split("\n");
+        for (const user of admin_users) {
+          if (!this.isValidUser(user)) {
+            this.toggleAccordion[0] = true;
+            // set i18n error message and return user in object
+            this.error.admin_users = this.$t("settings.invalid_user", {
+              user: user,
+            });
+            isValidationOk = false;
+            if (isValidationOk) {
+              this.focusElement("admin_users");
+            }
+            break;
+          }
+        }
       }
       return isValidationOk;
     },
@@ -300,6 +384,8 @@ export default {
             DOLI_ADMIN_LOGIN: this.DOLI_ADMIN_LOGIN,
             lets_encrypt: this.isLetsEncryptEnabled,
             http2https: this.isHttpToHttpsEnabled,
+            ldap_domain: this.ldap_domain,
+            admin_users: this.admin_users.split("\n").join(",").toLowerCase().trim(),
           },
           extra: {
             title: this.$t("settings.instance_configuration", {
