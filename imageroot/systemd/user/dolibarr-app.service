@@ -12,11 +12,13 @@ After=dolibarr.service mariadb-app.service
 Environment=PODMAN_SYSTEMD_UNIT=%n
 EnvironmentFile=%S/state/environment
 EnvironmentFile=-%S/state/smarthost.env
+EnvironmentFile=-%S/state/discovery_ldap.env
 WorkingDirectory=%S/state
 Restart=always
 TimeoutStopSec=70
 ExecStartPre=/bin/mkdir -p config
 ExecStartPre=/bin/rm -f %t/dolibarr-app.pid %t/dolibarr-app.ctr-id
+ExecStartPre=/usr/local/bin/runagent discover-ldap
 ExecStartPre=-runagent discover-smarthost
 ExecStart=/usr/bin/podman run --conmon-pidfile %t/dolibarr-app.pid \
     --cidfile %t/dolibarr-app.ctr-id --cgroups=no-conmon \
