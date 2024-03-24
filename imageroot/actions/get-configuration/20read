@@ -13,6 +13,7 @@ import os
 import sys
 import json
 import agent
+from agent.ldapproxy import Ldapproxy
 
 # Prepare return variable
 config = {}
@@ -23,6 +24,19 @@ config["http2https"] = os.getenv("TRAEFIK_HTTP2HTTPS") == "True"
 config["lets_encrypt"] = os.getenv("TRAEFIK_LETS_ENCRYPT") == "True"
 config["DOLI_ADMIN_LOGIN"] = os.getenv("DOLI_ADMIN_LOGIN", "")
 config["DOLI_ADMIN_PASSWORD"] = os.getenv("DOLI_ADMIN_PASSWORD", "")
+config["admin_users"] = os.getenv("ADMIN_USERS", "administrator")
+config["ldap_domain"] = os.getenv("LDAP_DOMAIN", "")
 
+# retrieve LDAP domains list
+lp = Ldapproxy()
+domains = []
+for key in lp.get_domains_list():
+    domains.append({
+        "name": key,
+        "label": key,
+        "value": key,
+    })
+
+config['user_domains_list'] = domains
 # Dump the configuration to stdout
 json.dump(config, fp=sys.stdout)
