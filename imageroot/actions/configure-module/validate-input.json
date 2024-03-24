@@ -7,14 +7,18 @@
         {
             "host": "dolibarr.domain.org",
             "http2https": true,
-            "lets_encrypt": true
+            "lets_encrypt": true,
+            "ldap_domain": "ad.domain.org",
+            "admin_users": "Administrator,user1"
         }
     ],
     "type": "object",
     "required": [
         "host",
         "http2https",
-        "lets_encrypt"
+        "lets_encrypt",
+        "ldap_domain",
+        "admin_users"
     ],
     "properties": {
         "host": {
@@ -36,6 +40,12 @@
             "type": "string"
         },
         "DOLI_ADMIN_LOGIN": {
+            "type": "string"
+        },
+        "ldap_domain": {
+            "type": "string"
+        },
+        "admin_users": {
             "type": "string"
         }
     }
