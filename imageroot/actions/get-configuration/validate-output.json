@@ -7,14 +7,30 @@
         {
             "host": "dolibarr.domain.org",
             "http2https": true,
-            "lets_encrypt": true
+            "lets_encrypt": true,
+            "admin_users": "",
+            "ldap_domain": "rocky9-pve4.org",
+            "user_domains_list": [
+                {
+                    "name": "rocky9-pve4.org",
+                    "label": "rocky9-pve4.org",
+                    "value": "rocky9-pve4.org"
+                },
+                {
+                    "name": "ad.rocky9-pve4.org",
+                    "label": "ad.rocky9-pve4.org",
+                    "value": "ad.rocky9-pve4.org"
+                }
+            ]
         }
     ],
     "type": "object",
     "required": [
         "host",
         "http2https",
-        "lets_encrypt"
+        "lets_encrypt",
+        "admin_users",
+        "ldap_domain"
     ],
     "properties": {
         "host": {
@@ -31,6 +47,34 @@
             "type": "boolean",
             "title": "HTTP to HTTPS redirection",
             "description": "Redirect all the HTTP requests to HTTPS"
+        },
+        "admin_users": {
+            "type": "string"
+        },
+        "ldap_domain": {
+            "type": "string"
+        },
+        "user_domains_list": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "label": {
+                        "type": "string"
+                    },
+                    "value": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "name",
+                    "label",
+                    "value"
+                ]
+            }
         }
     }
 }
