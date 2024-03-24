@@ -27,6 +27,7 @@
     "dolibarr_fqdn": "Dolibarr hostname (FQDN)",
     "dolibarr_admin": "Dolibarr Admin User Name",
     "dolibarr_admin_password": "Dolibarr Password",
+    "ldap_domain": "LDAP domain",
     "lets_encrypt": "Request LE Certificate",
     "http_to_https": "Force HTTPS",
     "enabled": "Enabled",
