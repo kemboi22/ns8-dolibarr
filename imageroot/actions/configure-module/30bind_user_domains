@@ -12,5 +12,9 @@ import sys
 
 request = json.load(sys.stdin)
 
+ldap_domain = request.get("ldap_domain")
 # Bind the new domain, overriding previous values (unbind)
-agent.bind_user_domains([request["ldap_domain"]])
+if ldap_domain:
+    agent.bind_user_domains([ldap_domain])
+else:
+    agent.bind_user_domains([])
