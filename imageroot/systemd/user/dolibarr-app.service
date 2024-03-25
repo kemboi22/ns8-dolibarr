@@ -18,9 +18,9 @@ Restart=always
 TimeoutStopSec=70
 ExecStartPre=/bin/mkdir -p config
 ExecStartPre=/bin/rm -f %t/dolibarr-app.pid %t/dolibarr-app.ctr-id
+ExecStartPre=-runagent discover-ldap
 ExecStartPre=-runagent discover-smarthost
 ExecStartPre=-runagent expand-configuration
-ExecStartPre=-runagent discover-ldap
 ExecStart=/usr/bin/podman run --conmon-pidfile %t/dolibarr-app.pid \
     --cidfile %t/dolibarr-app.ctr-id --cgroups=no-conmon \
     --pod-id-file %t/dolibarr.pod-id --replace -d --name  dolibarr-app \
