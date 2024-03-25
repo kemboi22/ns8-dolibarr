@@ -38,5 +38,9 @@ for key in lp.get_domains_list():
     })
 
 config['user_domains_list'] = domains
+
+# Bind the new domain, overriding previous values (unbind)
+agent.bind_user_domains([config["ldap_domain"]])
 # Dump the configuration to stdout
 json.dump(config, fp=sys.stdout)
+
