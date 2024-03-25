@@ -28,7 +28,10 @@ config["admin_users"] = os.getenv("ADMIN_USERS", "administrator")
 config["ldap_domain"] = os.getenv("LDAP_DOMAIN", "")
 
 # Bind the new domain, overriding previous values (unbind)
-agent.bind_user_domains([config["ldap_domain"]])
+if config["ldap_domain"]:
+    agent.bind_user_domains([config["ldap_domain"]])
+else:
+    agent.bind_user_domains([])
 # retrieve LDAP domains list
 lp = Ldapproxy()
 domains = []
