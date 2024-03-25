@@ -16,6 +16,15 @@ import agent
 from agent.ldapproxy import Ldapproxy
 
 udomname = os.environ.get('LDAP_DOMAIN','')
+request = json.load(sys.stdin)
+
+ldap_domain = request.get("ldap_domain")
+# Bind the new domain, overriding previous values (unbind)
+if ldap_domain:
+    agent.bind_user_domains([ldap_domain])
+else:
+    agent.bind_user_domains([])
+
 
 try:
     odom = Ldapproxy().get_domain(udomname)
