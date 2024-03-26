@@ -42,7 +42,7 @@ ExecStart=/usr/bin/podman run --conmon-pidfile %t/dolibarr-app.pid \
     --env DOLI_LDAP_DN=${DOLIBARR_LDAP_USER} \
     --env DOLI_LDAP_BIND_PASS=${DOLIBARR_LDAP_PASS} \
 #    --env DOLI_LDAP_BIND_DN=${DOLIBARR_LDAP_USER} \
-    --env DOLI_LDAP_FILTER='(&(objectClass=inetOrgPerson)(uid=%s))' \
+#    --env DOLI_LDAP_FILTER='(&(objectClass=inetOrgPerson)(uid=%s))' \
     --env DOLI_LDAP_DEBUG=true \
     --volume=dolidoc:/var/www/documents \
     --volume=doliscripts:/var/www/scripts \
