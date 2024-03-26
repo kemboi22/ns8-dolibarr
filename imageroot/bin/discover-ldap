@@ -51,5 +51,5 @@ with open(tmpfile, "w") as denv:
     print('DOLIBARR_LDAP_PASS=' + odom['bind_password'], file=denv)
     print('DOLIBARR_LDAP_SCHEMA=' + odom['schema'], file=denv)
     print('DOLIBARR_LDAP_BASE=' + odom['base_dn'], file=denv)
-    print('DOLIBARR_LDAP=' + json.dumps(odom), file=denv)
+    print('DOLIBARR_LDAP_ADMIN_USER=' + os.environ.get('ADMIN_USERS',''), file=denv)
 os.replace(tmpfile, "discovery_ldap.env")
