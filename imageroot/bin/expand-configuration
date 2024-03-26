@@ -4,46 +4,46 @@
 # Copyright (C) 2022 Nethesis S.r.l.
 # SPDX-License-Identifier: GPL-3.0-or-later
 #
-
-import os
-import json
-import agent
-import agent.tasks
-import socket
-
-from jinja2 import Environment, FileSystemLoader, select_autoescape
-
-files =["config/sogo.conf"]
-for f in files:
-    try:
-        os.remove(f)
-    except FileNotFoundError:
-        pass
-
-jenv = Environment(
-    loader=FileSystemLoader(os.getenv("AGENT_INSTALL_DIR")+"/templates"),
-    autoescape=select_autoescape(),
-    keep_trailing_newline=True,
-)
-
-properties = {
-    "admin_users" : os.environ['ADMIN_USERS'].lower(),
-    "ldap_schema" : os.environ['DOLIBARR_LDAP_SCHEMA'],
-    "ldap_port" : int(os.environ['DOLIBARR_LDAP_PORT']),
-    "ldap_user" : os.environ['DOLIBARR_LDAP_USER'],
-    "ldap_password" : os.environ['DOLIBARR_LDAP_PASS'],
-    "ldap_base" : os.environ['DOLIBARR_LDAP_BASE'],
-}
-
-template = jenv.get_template('sogo.conf')
-output = template.render(properties)
-with open("config/sogo.conf","w") as f:
-    f.write(output)
-
-# build httpd config
-properties = {
-    "domain": os.environ['TRAEFIK_HOST'],
-    "active_sync": True if os.environ['ACTIVESYNC'] == 'True' else False,
-    "dav": True if os.environ['DAV'] == 'True' else False
-}
-
+#
+# import os
+# import json
+# import agent
+# import agent.tasks
+# import socket
+#
+# from jinja2 import Environment, FileSystemLoader, select_autoescape
+#
+# files =["config/sogo.conf"]
+# for f in files:
+#     try:
+#         os.remove(f)
+#     except FileNotFoundError:
+#         pass
+#
+# jenv = Environment(
+#     loader=FileSystemLoader(os.getenv("AGENT_INSTALL_DIR")+"/templates"),
+#     autoescape=select_autoescape(),
+#     keep_trailing_newline=True,
+# )
+#
+# properties = {
+#     "admin_users" : os.environ['ADMIN_USERS'].lower(),
+#     "ldap_schema" : os.environ['DOLIBARR_LDAP_SCHEMA'],
+#     "ldap_port" : int(os.environ['DOLIBARR_LDAP_PORT']),
+#     "ldap_user" : os.environ['DOLIBARR_LDAP_USER'],
+#     "ldap_password" : os.environ['DOLIBARR_LDAP_PASS'],
+#     "ldap_base" : os.environ['DOLIBARR_LDAP_BASE'],
+# }
+#
+# template = jenv.get_template('sogo.conf')
+# output = template.render(properties)
+# with open("config/sogo.conf","w") as f:
+#     f.write(output)
+#
+# # build httpd config
+# properties = {
+#     "domain": os.environ['TRAEFIK_HOST'],
+#     "active_sync": True if os.environ['ACTIVESYNC'] == 'True' else False,
+#     "dav": True if os.environ['DAV'] == 'True' else False
+# }
+#

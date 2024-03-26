@@ -39,9 +39,9 @@ ExecStart=/usr/bin/podman run --conmon-pidfile %t/dolibarr-app.pid \
     --env DOLI_LDAP_PORT=${DOLIBARR_LDAP_PORT} \
     --env DOLI_LDAP_VERSION=3 \
     --env DOLI_LDAP_SERVER_TYPE=openldap \
-    --env DOLI_LDAP_DN=${DOLIBARR_LDAP_USER} \
+    --env DOLI_LDAP_DN=ou=users,cn=users,cn=accounts,${DOLIBARR_LDAP_BASE} \
     --env DOLI_LDAP_BIND_PASS=${DOLIBARR_LDAP_PASS} \
-#    --env DOLI_LDAP_BIND_DN=${DOLIBARR_LDAP_USER} \
+    --env DOLI_LDAP_BIND_DN=uid=admin,cn=users,cn=accounts,${DOLIBARR_LDAP_USER} \
 #    --env DOLI_LDAP_FILTER='(&(objectClass=inetOrgPerson)(uid=%s))' \
     --env DOLI_LDAP_DEBUG=true \
     --volume=dolidoc:/var/www/documents \
