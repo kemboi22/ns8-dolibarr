@@ -42,12 +42,12 @@ ExecStart=/usr/bin/podman run --conmon-pidfile %t/dolibarr-app.pid \
     --env DOLI_LDAP_DN=ou=users,cn=users,cn=accounts,${DOLIBARR_LDAP_BASE} \
     --env DOLI_LDAP_BIND_PASS=${DOLIBARR_LDAP_PASS} \
     --env DOLI_LDAP_BIND_DN=uid=admin,cn=users,cn=accounts,${DOLIBARR_LDAP_USER} \
-#    --env DOLI_LDAP_FILTER='(&(objectClass=inetOrgPerson)(uid=%s))' \
     --env DOLI_LDAP_DEBUG=true \
     --volume=dolidoc:/var/www/documents \
     --volume=doliscripts:/var/www/scripts \
     --volume=dolicustom:/var/www/custom \
     ${DOLIBARR_IMAGE}
+    #    --env DOLI_LDAP_FILTER='(&(objectClass=inetOrgPerson)(uid=%s))' \
 ExecStop=/usr/bin/podman stop --ignore --cidfile %t/dolibarr-app.ctr-id -t 10
 ExecReload=/usr/bin/podman kill -s HUP dolibarr-app
 SyslogIdentifier=%u
