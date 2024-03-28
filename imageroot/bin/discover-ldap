@@ -17,8 +17,8 @@ from agent.ldapproxy import Ldapproxy
 
 udomname = os.environ.get('LDAP_DOMAIN','')
 
-ldap_domain = os.environ.get('LDAP_DOMAIN','')
-agent.bind_user_domains([ldap_domain])
+#ldap_domain = os.environ.get('LDAP_DOMAIN','')
+#agent.bind_user_domains([ldap_domain])
 # Bind the new domain, overriding previous values (unbind)
 # if ldap_domain:
 #     agent.bind_user_domains([ldap_domain])
