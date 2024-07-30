@@ -16,6 +16,7 @@ EnvironmentFile=%S/state/database.env
 Restart=always
 TimeoutStopSec=70
 ExecStartPre=/bin/rm -f %t/mariadb-app.pid %t/mariadb-app.ctr-id
+ExecStartPre=-runagent discover-database
 ExecStart=/usr/bin/podman run --conmon-pidfile %t/mariadb-app.pid \
     --cidfile %t/mariadb-app.ctr-id --cgroups=no-conmon \
     --pod-id-file %t/dolibarr.pod-id --replace -d --name mariadb-app \
